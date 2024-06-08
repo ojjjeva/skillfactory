@@ -1,0 +1,75 @@
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [firstNumber, setFirstNumber] = useState(0);
+  const [secondNumber, setSecondNumber] = useState(0);
+  const [operation, setOperation] = useState('');
+
+  const handleClick = (e) => {
+    if (e.target.type === 'number') {
+      if (operation === '') {
+        setFirstNumber(parseInt(e.target.value));
+      } else {
+        setSecondNumber(parseInt(e.target.value));
+      }
+    } else if (e.target.value === 'C') {
+      setFirstNumber(0);
+      setSecondNumber(0);
+      setOperation('');
+    } else if (e.target.value === '=') {
+      try {
+        let result = 0;
+        switch (operation) {
+          case '+':
+            result = firstNumber + secondNumber;
+            break;
+          case '-':
+            result = firstNumber - secondNumber;
+            break;
+          case ' * ':
+            result = firstNumber  *  secondNumber;
+            break;
+          case '/':
+            result = firstNumber / secondNumber;
+            break;
+        }
+        setFirstNumber(result);
+        setSecondNumber(0);
+        setOperation('');
+      } catch (error) {
+        setFirstNumber(0);
+        setSecondNumber(0);
+        setOperation('');
+      }
+    } else {
+      setOperation(e.target.value);
+    }
+  };
+
+  return (
+    <div className="calculator">
+      <input type="text" value={firstNumber} readOnly />
+      <div className="buttons">
+        <button onClick={handleClick}>7</button>
+        <button onClick={handleClick}>8</button>
+        <button onClick={handleClick}>9</button>
+        <button onClick={handleClick}>/</button>
+        <button onClick={handleClick}>4</button>
+        <button onClick={handleClick}>5</button>
+        <button onClick={handleClick}>6</button>
+        <button onClick={handleClick}> * </button>
+        <button onClick={handleClick}>1</button>
+        <button onClick={handleClick}>2</button>
+        <button onClick={handleClick}>3</button>
+        <button onClick={handleClick}>-</button>
+        <button onClick={handleClick}>.</button>
+        <button onClick={handleClick}>0</button>
+        <button onClick={handleClick}>C</button>
+        <button onClick={handleClick}>=</button>
+      </div>
+    </div>
+  );
+}
+
+export default App;
